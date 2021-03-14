@@ -11,7 +11,7 @@ Utilizados nos projetos:
 
 ## Como usar
 
-⚠️ **Atenção!**
+⚠️ **Atenção**
 
 Esses arquivos dependem de uma estrutura específica para que funcionem adequadamente.
 
@@ -27,10 +27,14 @@ npx degit lagden/boilerplate-docker-nodejs/files#main ./ --force
 
 ---
 
-Caso utilize para aplicações **frontend**, faça o seguinte:
+Caso utilize para aplicações **frontend**, é importante ajustar os `Dockerfiles`.
 
-- Apague o `Dockerfile`
-- Renomeie o  arquivo `Dockerfile.front` para `Dockerfile`
+```
+rm Dockerfile
+rm Dockerfile.dev
+mv Dockerfile.front Dockerfile
+mv Dockerfile.dev.front Dockerfile.dev
+```
 
 
 ## License
