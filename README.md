@@ -15,7 +15,7 @@ Esses arquivos dependem de uma estrutura específica para que funcionem adequada
 
 **Exemplo:**
 
-```shell
+```
 npx degit lagden/boilerplate-gql#main meu_app
 cd meu_app
 npx degit lagden/boilerplate-bin/files#main bin
