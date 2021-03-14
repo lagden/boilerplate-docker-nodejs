@@ -25,6 +25,13 @@ npx degit lagden/boilerplate-envs/files#main ./ --force
 npx degit lagden/boilerplate-docker-nodejs/files#main ./ --force
 ```
 
+---
+
+Caso utilize para aplicações **frontend**, faça o seguinte:
+
+- Apague o `Dockerfile`
+- Renomeie o  arquivo `Dockerfile.front` para `Dockerfile`
+
 
 ## License
 
