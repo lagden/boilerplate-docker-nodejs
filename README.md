@@ -1,5 +1,7 @@
 # Boilerplate Docker Node.js
 
+Boilerplate com arquivos para rodar a aplicação **Node.js** via **docker**.
+
 Utilizados nos projetos:
 
 - [Boilerplate Rest](https://github.com/lagden/boilerplate-rest)
