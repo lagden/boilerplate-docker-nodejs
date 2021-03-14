@@ -2,6 +2,7 @@
 bin
 coverage
 node_modules
+public
 test
 
 docker-compose*
@@ -11,6 +12,10 @@ LICENSE
 license
 readme.md
 README.md
+stuff*.md
+
+!.eslintrc.js
+!.gitignore
 
 !bin/wait
 !bin/_fn
