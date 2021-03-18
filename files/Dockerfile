@@ -1,12 +1,16 @@
 FROM node:14.16-alpine3.13
 LABEL maintainer="lagden@gmail.com"
 
+# Shared libraries
+RUN apk add --no-cache --update libc6-compat
+
 # Timezone
-RUN apk add --no-cache tzdata
+RUN apk add --no-cache --update tzdata
 ENV TZ=America/Sao_Paulo
 RUN ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 
-RUN ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2
+# Clear apk cache
+RUN rm -rf /var/cache/apk/*
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
