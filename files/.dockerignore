@@ -21,3 +21,4 @@ stuff*.md
 !bin/_fn
 !bin/wait
 !bin/prod
+!bin/public

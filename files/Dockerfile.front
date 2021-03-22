@@ -1,5 +1,5 @@
 # Stage 1 - Auxiliar
-FROM node:14.16-alpine3.13
+FROM node:14.16-alpine3.13 as build
 LABEL maintainer="lagden@gmail.com"
 LABEL autodelete="true"
 
@@ -32,7 +32,6 @@ USER node
 
 WORKDIR $BASE_APP
 RUN yarn install
-# RUN npm rb node-sass ???
 RUN npm run build
 
 # -----
