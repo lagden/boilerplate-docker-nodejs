@@ -16,6 +16,8 @@ stuff*.md
 
 !.eslintrc.js
 !.gitignore
+!.yarnrc.yml
 
-!bin/wait
 !bin/_fn
+!bin/wait
+!bin/prod
