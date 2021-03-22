@@ -26,9 +26,9 @@ ENV BASE_APP=$BASE/app
 WORKDIR $BASE
 ADD --chown=node:node . $BASE_APP
 
-USER node
-
 WORKDIR $BASE_APP
 RUN bin/prod
 RUN yarn install
 RUN rm -rf bin/prod .eslintrc.js .gitignore .yarnrc.yml .yarn yarn.lock
+
+USER node

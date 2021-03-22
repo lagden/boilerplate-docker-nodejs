@@ -52,6 +52,9 @@ RUN ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 # Clear apk cache
 RUN rm -rf /var/cache/apk/*
 
+# Yarn 2
+RUN yarn set version berry
+
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
 
@@ -60,13 +63,14 @@ ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
 WORKDIR $BASE
+COPY --from=build $BASE_APP/bin $BASE_APP/bin
 COPY --from=build $BASE_APP/public $BASE_APP/public
 COPY --from=build $BASE_APP/server $BASE_APP/server
 COPY --from=build $BASE_APP/package.json $BASE_APP
 
-USER node
-
 WORKDIR $BASE_APP
 RUN bin/prod
 RUN yarn install
-RUN rm -rf bin/prod .eslintrc.js .gitignore .yarnrc.yml .yarn yarn.lock
+RUN rm -rf bin/prod bin/public .eslintrc.js .gitignore .yarnrc.yml .yarn yarn.lock
+
+USER node
