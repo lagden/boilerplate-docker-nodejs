@@ -40,3 +40,4 @@ ADD --chown=node:node . $BASE_APP
 USER node
 
 WORKDIR $BASE_APP
+RUN yarn install

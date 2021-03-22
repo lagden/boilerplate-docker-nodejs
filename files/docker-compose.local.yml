@@ -15,3 +15,5 @@ services:
       HOSTNAME_CUSTOM: "${HOSTNAME_CUSTOM}"
     volumes:
       - .:/home/node/app
+      - /home/node/app/node_modules
+      - /home/node/app/.yarn
