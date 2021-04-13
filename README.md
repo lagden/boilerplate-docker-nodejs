@@ -1,6 +1,6 @@
 # Boilerplate Docker Node.js
 
-Boilerplate com arquivos para rodar a aplicação **Node.js** via **docker**.
+Boilerplate para executar uma aplicação **Node.js** via **docker**.
 
 Utilizados nos projetos:
 
@@ -18,22 +18,20 @@ Esses arquivos dependem de uma estrutura específica para que funcionem adequada
 **Exemplo:**
 
 ```
-npx degit lagden/boilerplate-gql#main meu_app
+yarn dlx degit lagden/boilerplate-rest#master meu_app
 cd meu_app
-npx degit lagden/boilerplate-bin/files#main bin
-npx degit lagden/boilerplate-envs/files#main ./ --force
-npx degit lagden/boilerplate-docker-nodejs/files#main ./ --force
+yarn dlx degit lagden/boilerplate-bin/files#main bin
+yarn dlx degit lagden/boilerplate-envs/files#main ./ --force
+yarn dlx degit lagden/boilerplate-docker-nodejs/files#main ./ --force
 ```
 
 ---
 
-Caso utilize para aplicações **frontend**, é importante ajustar os `Dockerfiles`.
+Caso utilize para aplicações **frontend**, é importante ajustar o `Dockerfile`.
 
 ```
 rm Dockerfile
-rm Dockerfile.dev
 mv Dockerfile.front Dockerfile
-mv Dockerfile.dev.front Dockerfile.dev
 ```
 
 
