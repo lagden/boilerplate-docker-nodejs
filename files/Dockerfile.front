@@ -67,6 +67,7 @@ COPY --from=build $BASE_APP/bin $BASE_APP/bin
 COPY --from=build $BASE_APP/public $BASE_APP/public
 COPY --from=build $BASE_APP/server $BASE_APP/server
 COPY --from=build $BASE_APP/package.json $BASE_APP
+COPY --from=build $BASE_APP/.yarnrc.yml $BASE_APP
 
 WORKDIR $BASE_APP
 RUN bin/prod
