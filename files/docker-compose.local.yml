@@ -2,14 +2,19 @@ version: "3.7"
 services:
   app:
     build:
-      dockerfile: ${DOCKERFILE}
       context: ./
+      target: dev
       args:
         NODE_ENV: ${NODE_ENV}
     command: >
       /bin/ash -c "
-        bin/watch
+        bin/docker/watch
       "
+    # command: >
+    #   /bin/ash -c "
+    #     bin/helper/wait ${DB_HOST}:${DB_PORT};
+    #     bin/docker/watch
+    #   "
     environment:
       WATCH_CMD: "${WATCH_CMD}"
       HOSTNAME_CUSTOM: "${HOSTNAME_CUSTOM}"

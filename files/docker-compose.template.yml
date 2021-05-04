@@ -6,6 +6,11 @@ services:
       /bin/ash -c "
         node server
       "
+    # command: >
+    #   /bin/ash -c "
+    #     bin/helper/wait ${DB_HOST}:${DB_PORT};
+    #     node server
+    #   "
     environment:
       DEBUG_HIDE_DATE: ${DEBUG_HIDE_DATE}
       DEBUG_COLORS: ${DEBUG_COLORS}
@@ -23,6 +28,7 @@ services:
     networks:
       - net
     deploy:
+      mode: replicated
       replicas: ${DEPLOY_REPLICAS}
       resources:
         limits:

@@ -1,7 +1,11 @@
-# Stage 1 - Auxiliar
-FROM node:14.16-alpine3.13 as build
+# Development
+# ----------
+FROM node:14.16-alpine3.13 as dev
 LABEL maintainer="lagden@gmail.com"
-LABEL autodelete="true"
+
+# If Docker Host is Mac or Windows
+ENV ENTR_INOTIFY_WORKAROUND=1
+COPY --from=lagden/entr:4.7-alpine3.13 /usr/local/bin/entr /usr/local/bin/.
 
 # Shared libraries
 RUN apk add --no-cache --update libc6-compat
@@ -28,16 +32,40 @@ ENV BASE_APP=$BASE/app
 WORKDIR $BASE
 ADD --chown=node:node . $BASE_APP
 
+WORKDIR $BASE_APP
+RUN yarn install
+
 USER node
+
+
+# Build
+# ----------
+FROM node:14.16-alpine3.13 as build
+LABEL maintainer="lagden@gmail.com"
+
+# Yarn 2
+RUN yarn set version berry
+
+ARG NODE_ENV="production"
+ARG BASE="/home/node"
+
+ENV NODE_ENV=$NODE_ENV
+ENV BASE=$BASE
+ENV BASE_APP=$BASE/app
+
+WORKDIR $BASE
+ADD --chown=node:node . $BASE_APP
 
 WORKDIR $BASE_APP
 RUN yarn install
 RUN npm run build
 
-# -----
+USER node
 
-# Stage: 2 - Principal
-FROM node:14.16-alpine3.13
+
+# Main
+# ----------
+FROM node:14.16-alpine3.13 as main
 LABEL maintainer="lagden@gmail.com"
 
 # Shared libraries
@@ -62,16 +90,16 @@ ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
-WORKDIR $BASE
-COPY --from=build $BASE_APP/bin $BASE_APP/bin
-COPY --from=build $BASE_APP/public $BASE_APP/public
-COPY --from=build $BASE_APP/server $BASE_APP/server
-COPY --from=build $BASE_APP/package.json $BASE_APP
-COPY --from=build $BASE_APP/.yarnrc.yml $BASE_APP
-
 WORKDIR $BASE_APP
-RUN bin/prod
+
+COPY --from=build $BASE_APP/bin bin
+COPY --from=build $BASE_APP/public public
+COPY --from=build $BASE_APP/server server
+COPY --from=build $BASE_APP/package.json .
+COPY --from=build $BASE_APP/.yarnrc.yml .
+
+RUN bin/node/prod.js
+RUN rm -rf bin .eslintrc.cjs .gitignore .yarnrc.yml .yarn yarn.lock
 RUN yarn install
-RUN rm -rf bin/prod bin/public .eslintrc.js .gitignore .yarnrc.yml .yarn yarn.lock
 
 USER node

@@ -1,5 +1,4 @@
 .*
-bin
 coverage
 node_modules
 public
@@ -15,10 +14,6 @@ README.md
 stuff*.md
 
 !.eslintrc.js
+!.eslintrc.cjs
 !.gitignore
 !.yarnrc.yml
-
-!bin/_fn
-!bin/wait
-!bin/prod
-!bin/public
