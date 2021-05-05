@@ -70,8 +70,8 @@ ADD --chown=node:node . $BASE_APP
 
 WORKDIR $BASE_APP
 RUN bin/node/prod.js
+RUN yarn install
 RUN rm -rf bin/docker bin/front bin/local bin/node bin/front
 RUN rm -rf .eslintrc.cjs .gitignore .yarnrc.yml .yarn yarn.lock
-RUN yarn install
 
 USER node

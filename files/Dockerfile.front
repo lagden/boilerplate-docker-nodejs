@@ -99,7 +99,8 @@ COPY --from=build $BASE_APP/package.json .
 COPY --from=build $BASE_APP/.yarnrc.yml .
 
 RUN bin/node/prod.js
-RUN rm -rf bin .eslintrc.cjs .gitignore .yarnrc.yml .yarn yarn.lock
 RUN yarn install
+RUN rm -rf bin/docker bin/front bin/local bin/node bin/front
+RUN rm -rf .eslintrc.cjs .gitignore .yarnrc.yml .yarn yarn.lock
 
 USER node
