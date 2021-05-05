@@ -27,7 +27,7 @@ yarn dlx degit lagden/boilerplate-docker-nodejs/files#main ./ --force
 
 ---
 
-Caso utilize para aplicações **frontend**, é importante ajustar o `Dockerfile`.
+Caso utilize para o desenvolvimento de aplicações **frontend**, é importante ajustar o `Dockerfile`.
 
 ```
 rm Dockerfile
