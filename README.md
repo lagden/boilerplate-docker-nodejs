@@ -13,7 +13,7 @@ Utilizados nos projetos:
 
 ⚠️ **Atenção**
 
-Esses arquivos dependem de uma estrutura específica para que funcionem adequadamente.
+Esses arquivos dependem de uma estrutura específica para que funcionem.
 
 **Exemplo:**
 

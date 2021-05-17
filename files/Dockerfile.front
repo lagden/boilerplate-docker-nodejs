@@ -1,6 +1,6 @@
 # Development
 # ----------
-FROM node:14.16-alpine3.13 as dev
+FROM node:14.17-alpine3.13 as dev
 LABEL maintainer="lagden@gmail.com"
 
 # If Docker Host is Mac or Windows
@@ -40,7 +40,7 @@ USER node
 
 # Build
 # ----------
-FROM node:14.16-alpine3.13 as build
+FROM node:14.17-alpine3.13 as build
 LABEL maintainer="lagden@gmail.com"
 
 # Yarn 2
@@ -65,7 +65,7 @@ USER node
 
 # Main
 # ----------
-FROM node:14.16-alpine3.13 as main
+FROM node:14.17-alpine3.13 as main
 LABEL maintainer="lagden@gmail.com"
 
 # Shared libraries
@@ -100,7 +100,7 @@ COPY --from=build $BASE_APP/.yarnrc.yml .
 
 RUN bin/node/prod.js
 RUN yarn install
-RUN rm -rf bin/docker bin/front bin/local bin/node bin/front
+RUN rm -rf bin
 RUN rm -rf .eslintrc.cjs .gitignore .yarnrc.yml .yarn yarn.lock
 
 USER node

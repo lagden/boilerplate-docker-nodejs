@@ -1,6 +1,6 @@
 # Development
 # ----------
-FROM node:14.16-alpine3.13 as dev
+FROM node:14.17-alpine3.13 as dev
 LABEL maintainer="lagden@gmail.com"
 
 # If Docker Host is Mac or Windows
@@ -40,7 +40,7 @@ USER node
 
 # Main
 # ----------
-FROM node:14.16-alpine3.13 as main
+FROM node:14.17-alpine3.13 as main
 LABEL maintainer="lagden@gmail.com"
 
 # Shared libraries
