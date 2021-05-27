@@ -6,6 +6,12 @@ services:
       /bin/ash -c "
         node server
       "
+
+    # command: >
+    #   /bin/ash -c "
+    #     npx sirv public --etag --brotli --cors --host --port ${PORT}
+    #   "
+
     # command: >
     #   /bin/ash -c "
     #     bin/helper/wait ${DB_HOST}:${DB_PORT};
