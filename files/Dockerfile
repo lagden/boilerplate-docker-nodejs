@@ -65,6 +65,8 @@ ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
+USER node
+
 WORKDIR $BASE
 ADD --chown=node:node . $BASE_APP
 
@@ -73,5 +75,3 @@ RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin/docker bin/front bin/local bin/node bin/front
 RUN rm -rf .eslintrc.cjs .gitignore .yarnrc.yml .yarn yarn.lock
-
-USER node
