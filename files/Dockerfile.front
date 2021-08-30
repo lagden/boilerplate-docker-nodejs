@@ -90,8 +90,6 @@ ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
-USER node
-
 WORKDIR $BASE_APP
 
 COPY --from=build $BASE_APP/bin bin
@@ -104,3 +102,5 @@ RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin
 RUN rm -rf .eslintrc.cjs .gitignore .yarnrc.yml .yarn yarn.lock
+
+USER node
