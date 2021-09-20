@@ -12,6 +12,7 @@ readme.md
 README.md
 stuff*.md
 
+!.eslintrc.yml
 !.eslintrc.js
 !.eslintrc.cjs
 !.gitignore
