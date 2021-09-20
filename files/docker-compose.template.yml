@@ -9,7 +9,7 @@ services:
 
     # command: >
     #   /bin/ash -c "
-    #     npx sirv ${PUBLIC_TARGET} --dev -eBcm 0 -H ${HOSTNAME_CUSTOM} --port ${PORT}
+    #     npx sirv ${PUBLIC_DIR} --dev -eBcm 0 -H ${HOSTNAME_CUSTOM} --port ${PORT}
     #   "
 
     # command: >
