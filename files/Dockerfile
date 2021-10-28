@@ -20,7 +20,7 @@ RUN ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 RUN rm -rf /var/cache/apk/*
 
 # Yarn
-RUN yarn set version latest
+RUN yarn set version stable
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
@@ -56,7 +56,7 @@ RUN ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 RUN rm -rf /var/cache/apk/*
 
 # Yarn
-RUN yarn set version latest
+RUN yarn set version stable
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
@@ -72,6 +72,6 @@ WORKDIR $BASE_APP
 RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin/docker bin/local bin/node
-RUN rm -rf .*
+RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc*
 
 USER node

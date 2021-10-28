@@ -20,7 +20,7 @@ RUN ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 RUN rm -rf /var/cache/apk/*
 
 # Yarn
-RUN yarn set version latest
+RUN yarn set version stable
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
@@ -44,7 +44,7 @@ FROM node:16.13-alpine3.14 as build
 LABEL maintainer="lagden@gmail.com"
 
 # Yarn
-RUN yarn set version latest
+RUN yarn set version stable
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
@@ -81,7 +81,7 @@ RUN ln -s /usr/share/zoneinfo/$TZ /etc/localtime
 RUN rm -rf /var/cache/apk/*
 
 # Yarn
-RUN yarn set version latest
+RUN yarn set version stable
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
@@ -101,6 +101,6 @@ COPY --from=build $BASE_APP/.yarnrc.yml .
 RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin
-RUN rm -rf .*
+RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc*
 
 USER node
