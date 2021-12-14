@@ -1,5 +1,5 @@
 # Development
-# ----------
+# --------------------
 FROM node:16.13-alpine3.14 as dev
 LABEL maintainer="lagden@gmail.com"
 
@@ -38,8 +38,8 @@ RUN yarn install
 USER node
 
 
-# Main
-# ----------
+# Main Backend
+# --------------------
 FROM node:16.13-alpine3.14 as main
 LABEL maintainer="lagden@gmail.com"
 
@@ -72,6 +72,74 @@ WORKDIR $BASE_APP
 RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin/docker bin/local bin/node
+RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc*
+
+USER node
+
+
+# Build Frontend
+# --------------------
+FROM node:16.13-alpine3.14 as build_frontend
+LABEL maintainer="lagden@gmail.com"
+
+# Yarn
+RUN yarn set version stable
+
+ARG NODE_ENV="production"
+ARG BASE="/home/node"
+
+ENV NODE_ENV=$NODE_ENV
+ENV BASE=$BASE
+ENV BASE_APP=$BASE/app
+
+WORKDIR $BASE
+ADD --chown=node:node . $BASE_APP
+
+WORKDIR $BASE_APP
+RUN yarn install
+RUN npm run build
+
+USER node
+
+
+# Main Frontend
+# --------------------
+FROM node:16.13-alpine3.14 as main_frontend
+LABEL maintainer="lagden@gmail.com"
+
+# Shared libraries
+RUN apk add --no-cache --update libc6-compat
+RUN ln -s /lib64/ld-linux-x86-64.so.2 /lib/ld-linux-x86-64.so.2
+
+# Timezone
+RUN apk add --no-cache --update tzdata
+ENV TZ=America/Sao_Paulo
+RUN ln -s /usr/share/zoneinfo/$TZ /etc/localtime
+
+# Clear apk cache
+RUN rm -rf /var/cache/apk/*
+
+# Yarn
+RUN yarn set version stable
+
+ARG NODE_ENV="production"
+ARG BASE="/home/node"
+
+ENV NODE_ENV=$NODE_ENV
+ENV BASE=$BASE
+ENV BASE_APP=$BASE/app
+
+WORKDIR $BASE_APP
+
+COPY --from=build_frontend $BASE_APP/bin bin
+COPY --from=build_frontend $BASE_APP/public public
+COPY --from=build_frontend $BASE_APP/server server
+COPY --from=build_frontend $BASE_APP/package.json .
+COPY --from=build_frontend $BASE_APP/.yarnrc.yml .
+
+RUN bin/node/prod.js
+RUN yarn install
+RUN rm -rf bin
 RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc*
 
 USER node
