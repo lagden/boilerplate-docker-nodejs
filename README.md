@@ -17,21 +17,13 @@ Esses arquivos dependem de uma estrutura específica para que funcionem.
 
 **Exemplo:**
 
-```
-yarn dlx degit lagden/boilerplate-rest#master meu_app
-cd meu_app
+```shell
+yarn dlx degit lagden/boilerplate-rest#master projeto
+cd projeto
 yarn dlx degit lagden/boilerplate-bin/files#main bin
+yarn dlx degit lagden/boilerplate-eslint/files/backend/.eslintrc.yml#main ./ --force
 yarn dlx degit lagden/boilerplate-envs/files#main ./ --force
 yarn dlx degit lagden/boilerplate-docker-nodejs/files#main ./ --force
-```
-
----
-
-Caso utilize para o desenvolvimento de aplicações **frontend**, é importante ajustar o `Dockerfile`.
-
-```
-rm Dockerfile
-mv Dockerfile.front Dockerfile
 ```
 
 

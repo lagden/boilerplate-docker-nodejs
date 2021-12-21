@@ -1,5 +1,6 @@
 # Development
 # --------------------
+# --------------------
 FROM node:16.13-alpine3.14 as dev
 LABEL maintainer="lagden@gmail.com"
 
@@ -38,7 +39,9 @@ RUN yarn install
 USER node
 
 
+
 # Main Backend
+# --------------------
 # --------------------
 FROM node:16.13-alpine3.14 as main
 LABEL maintainer="lagden@gmail.com"
@@ -72,12 +75,14 @@ WORKDIR $BASE_APP
 RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin/docker bin/local bin/node
-RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc*
+RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc* yarn.lock
 
 USER node
 
 
+
 # Build Frontend
+# --------------------
 # --------------------
 FROM node:16.13-alpine3.14 as build_frontend
 LABEL maintainer="lagden@gmail.com"
@@ -93,16 +98,16 @@ ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
 WORKDIR $BASE
-ADD --chown=node:node . $BASE_APP
+ADD . $BASE_APP
 
 WORKDIR $BASE_APP
 RUN yarn install
 RUN npm run build
 
-USER node
 
 
 # Main Frontend
+# --------------------
 # --------------------
 FROM node:16.13-alpine3.14 as main_frontend
 LABEL maintainer="lagden@gmail.com"
@@ -129,17 +134,17 @@ ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
+WORKDIR $BASE
+COPY --from=build_frontend $BASE_APP/bin $BASE_APP/bin
+COPY --from=build_frontend $BASE_APP/public $BASE_APP/public
+COPY --from=build_frontend $BASE_APP/package.json $BASE_APP
+COPY --from=build_frontend $BASE_APP/yarn.lock $BASE_APP
+COPY --from=build_frontend $BASE_APP/.yarnrc.yml $BASE_APP
+
 WORKDIR $BASE_APP
-
-COPY --from=build_frontend $BASE_APP/bin bin
-COPY --from=build_frontend $BASE_APP/public public
-COPY --from=build_frontend $BASE_APP/server server
-COPY --from=build_frontend $BASE_APP/package.json .
-COPY --from=build_frontend $BASE_APP/.yarnrc.yml .
-
 RUN bin/node/prod.js
 RUN yarn install
-RUN rm -rf bin
-RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc*
+RUN rm -rf bin/docker bin/local bin/node
+RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc* yarn.lock
 
 USER node
