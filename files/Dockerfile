@@ -33,10 +33,10 @@ ENV BASE_APP=$BASE/app
 WORKDIR $BASE
 ADD --chown=node:node . $BASE_APP
 
+USER node
+
 WORKDIR $BASE_APP
 RUN yarn install
-
-USER node
 
 
 
@@ -71,13 +71,13 @@ ENV BASE_APP=$BASE/app
 WORKDIR $BASE
 ADD --chown=node:node . $BASE_APP
 
+USER node
+
 WORKDIR $BASE_APP
 RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin/docker bin/local bin/node
 RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc* yarn.lock
-
-USER node
 
 
 
@@ -98,7 +98,9 @@ ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
 WORKDIR $BASE
-ADD . $BASE_APP
+ADD --chown=node:node . $BASE_APP
+
+USER node
 
 WORKDIR $BASE_APP
 RUN yarn install
@@ -141,10 +143,10 @@ COPY --from=build_frontend $BASE_APP/package.json $BASE_APP
 COPY --from=build_frontend $BASE_APP/yarn.lock $BASE_APP
 COPY --from=build_frontend $BASE_APP/.yarnrc.yml $BASE_APP
 
+USER node
+
 WORKDIR $BASE_APP
 RUN bin/node/prod.js
 RUN yarn install
 RUN rm -rf bin/docker bin/local bin/node
 RUN rm -rf .prettierrc* .eslintrc* .git* .yarnrc* yarn.lock
-
-USER node
