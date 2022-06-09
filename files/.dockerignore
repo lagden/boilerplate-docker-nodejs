@@ -16,3 +16,8 @@ stuff*.md
 !.eslintrc*
 !.gitignore
 !.yarnrc.yml
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
