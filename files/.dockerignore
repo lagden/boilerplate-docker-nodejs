@@ -2,6 +2,7 @@
 coverage
 node_modules
 test
+public/*
 
 docker-compose*
 Dockerfile*
@@ -12,12 +13,16 @@ readme.md
 README.md
 stuff*.md
 
+!public/.gitkeep
+
 !.prettierrc*
 !.eslintrc*
 !.gitignore
+
 !.yarnrc.yml
+!.yarn/cache
 !.yarn/patches
-!.yarn/releases
 !.yarn/plugins
+!.yarn/releases
 !.yarn/sdks
 !.yarn/versions
