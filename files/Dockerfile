@@ -5,6 +5,7 @@ FROM lagden/node:latest as dev
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
+ARG PM="yarn"
 
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
@@ -16,7 +17,7 @@ WORKDIR $BASE
 ADD --chown=node:node . $BASE_APP
 
 WORKDIR $BASE_APP
-RUN yarn install
+RUN $PM install
 
 
 
@@ -27,6 +28,7 @@ FROM lagden/node:latest as main
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
+ARG PM="yarn"
 
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
@@ -39,7 +41,7 @@ ADD --chown=node:node . $BASE_APP
 
 WORKDIR $BASE_APP
 RUN bin/node/prod.js
-RUN yarn install
+RUN $PM install
 RUN rm -rf bin/docker bin/local bin/node
 RUN rm -rf .d* .e* .g* .p* .r* .y* y*
 
@@ -52,6 +54,7 @@ FROM lagden/node:latest as build_frontend
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
+ARG PM="yarn"
 
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
@@ -63,7 +66,7 @@ WORKDIR $BASE
 ADD --chown=node:node . $BASE_APP
 
 WORKDIR $BASE_APP
-RUN yarn install
+RUN $PM install
 RUN npm run build
 RUN bin/node/prod.js
 
@@ -76,6 +79,7 @@ FROM lagden/node:latest as main_frontend
 
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
+ARG PM="yarn"
 
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
@@ -91,5 +95,5 @@ COPY --from=build_frontend $BASE_APP/public $BASE_APP/public
 COPY --from=build_frontend $BASE_APP/package.json $BASE_APP
 
 WORKDIR $BASE_APP
-RUN yarn install
+RUN $PM install
 RUN rm -rf .y* yarn.lock
