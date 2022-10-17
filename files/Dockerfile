@@ -3,10 +3,11 @@
 # --------------------
 FROM lagden/node:latest as dev
 
+ARG PM="npm"
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
-ARG PM="yarn"
 
+ENV PM=$PM
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
