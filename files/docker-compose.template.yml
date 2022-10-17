@@ -1,6 +1,9 @@
 version: "3.7"
 services:
   app:
+    build:
+      args:
+        PM: ${PM:-npm}
     image: ${REGISTRY}/${IMAGE}:${VERSION}
     command: >
       /bin/ash -c "
@@ -23,7 +26,6 @@ services:
       DEBUG_COLORS: ${DEBUG_COLORS}
       DEBUG_PREFIX: ${DEBUG_PREFIX}
       DEBUG: ${DEBUG}
-      PM: ${PM:-npm}
       NODE_ENV: ${NODE_ENV}
       APP_ENV: ${APP_ENV}
       APP_NS: ${APP_NS}

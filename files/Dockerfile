@@ -7,7 +7,6 @@ ARG PM="npm"
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
 
-ENV PM=$PM
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
@@ -27,9 +26,9 @@ RUN $PM install
 # --------------------
 FROM lagden/node:latest as main
 
+ARG PM="npm"
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
-ARG PM="yarn"
 
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
@@ -53,9 +52,9 @@ RUN rm -rf .d* .e* .g* .p* .r* .y* y*
 # --------------------
 FROM lagden/node:latest as build_frontend
 
+ARG PM="npm"
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
-ARG PM="yarn"
 
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
@@ -78,9 +77,9 @@ RUN bin/node/prod.js
 # --------------------
 FROM lagden/node:latest as main_frontend
 
+ARG PM="npm"
 ARG NODE_ENV="production"
 ARG BASE="/home/node"
-ARG PM="yarn"
 
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
