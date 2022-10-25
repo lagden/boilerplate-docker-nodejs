@@ -88,12 +88,11 @@ ENV BASE_APP=$BASE/app
 USER node
 
 WORKDIR $BASE
-ADD --chown=node:node .yarn $BASE_APP/.yarn
-ADD --chown=node:node .yarnrc.yml $BASE_APP
-ADD --chown=node:node yarn.lock $BASE_APP
+ADD --chown=node:node .yarn* $BASE_APP
+ADD --chown=node:node *.lock $BASE_APP
 COPY --from=build_frontend $BASE_APP/public $BASE_APP/public
 COPY --from=build_frontend $BASE_APP/package.json $BASE_APP
 
 WORKDIR $BASE_APP
 RUN $PM install
-RUN rm -rf .y* yarn.lock
+RUN rm -rf .d* .e* .g* .p* .r* .y* y*
