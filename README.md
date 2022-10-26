@@ -21,7 +21,7 @@ Esses arquivos dependem de uma estrutura específica para que funcionem.
 npx tiged lagden/boilerplate-rest#main projeto
 cd projeto
 npx tiged lagden/boilerplate-bin/files#main bin --force
-npx tiged lagden/boilerplate-eslint/files/backend/.eslintrc.yml#main .eslintrc.yml --force
+npx tiged lagden/boilerplate-eslint/files/backendl#main . --force
 npx tiged lagden/boilerplate-envs/files#main . --force
 npx tiged lagden/boilerplate-docker-nodejs/files#main . --force
 ```
