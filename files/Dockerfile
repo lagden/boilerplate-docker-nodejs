@@ -11,6 +11,8 @@ ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
+RUN [[ "${PM}" != "yarn" ]] && npm i -g $PM
+
 USER node
 
 WORKDIR $BASE
@@ -33,6 +35,8 @@ ARG BASE="/home/node"
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
+
+RUN [[ "${PM}" != "yarn" ]] && npm i -g $PM
 
 USER node
 
@@ -60,6 +64,8 @@ ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
+RUN [[ "${PM}" != "yarn" ]] && npm i -g $PM
+
 USER node
 
 WORKDIR $BASE
@@ -84,6 +90,8 @@ ARG BASE="/home/node"
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
+
+RUN [[ "${PM}" != "yarn" ]] && npm i -g $PM
 
 USER node
 
