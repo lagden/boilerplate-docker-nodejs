@@ -5,6 +5,7 @@ services:
       target: dev
       args:
         PM: ${PM:-npm}
+        BUILD_ENV: ${BUILD_ENV:-development}
         NODE_ENV: ${NODE_ENV}
     command: >
       /bin/ash -c "
