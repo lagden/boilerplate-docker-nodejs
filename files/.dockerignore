@@ -2,7 +2,7 @@
 coverage
 node_modules
 test
-public/*
+dist
 
 docker-compose*
 Dockerfile*
@@ -12,8 +12,6 @@ license
 readme.md
 README.md
 stuff*.md
-
-!public/.gitkeep
 
 !.prettierrc*
 !.eslintrc*
