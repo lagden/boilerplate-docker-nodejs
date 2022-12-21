@@ -106,6 +106,7 @@ COPY --chown=node:node .yar[n]/ $BASE_APP/.yarn
 COPY --chown=node:node --from=build_frontend $BASE_APP/package.json $BASE_APP
 COPY --chown=node:node --from=build_frontend $BASE_APP/server*/ $BASE_APP/server
 COPY --chown=node:node --from=build_frontend $BASE_APP/public*/ $BASE_APP/public
+COPY --chown=node:node --from=build_frontend $BASE_APP/dist*/ $BASE_APP/dist
 
 RUN [[ "${PM}" == "yarn" ]] && yarn plugin import workspace-tools;yarn workspaces focus --all --production || $PM i
 RUN rm -rf .d* .e* .g* .p* .r* .y* *.lock
