@@ -8,12 +8,12 @@ services:
         NODE_ENV: ${NODE_ENV}
     command: >
       /bin/ash -c "
-        bin/local/start
+        bin/docker/watch
       "
     # command: >
     #   /bin/ash -c "
     #     bin/helper/wait ${DB_HOST}:${DB_PORT};
-    #     bin/local/start
+    #     bin/docker/watch
     #   "
     environment:
       WATCH_CMD: "${WATCH_CMD}"
