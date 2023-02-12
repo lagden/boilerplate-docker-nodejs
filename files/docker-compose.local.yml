@@ -8,16 +8,13 @@ services:
         NODE_ENV: ${NODE_ENV}
     command: >
       /bin/ash -c "
-        bin/docker/watch
+        ${WATCH_CMD}
       "
     # command: >
     #   /bin/ash -c "
     #     bin/helper/wait ${DB_HOST}:${DB_PORT};
-    #     bin/docker/watch
+    #     ${WATCH_CMD}
     #   "
-    environment:
-      WATCH_CMD: "${WATCH_CMD}"
-      HOSTNAME_CUSTOM: "${HOSTNAME_CUSTOM}"
     volumes:
       - .:/home/node/app
       - /home/node/app/node_modules

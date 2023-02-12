@@ -9,7 +9,7 @@ services:
 
     # command: >
     #   /bin/ash -c "
-    #     npx sirv ${PUBLIC_DIR} --dev -eBcm 0 -H ${HOSTNAME_CUSTOM} --port ${PORT}
+    #     npx sirv ${PUBLIC_DIR} --dev -eBc -m 0 -H ${HOSTNAME_CUSTOM} --port ${PORT}
     #   "
 
     # command: >
@@ -29,6 +29,7 @@ services:
       PORT: ${PORT}
       PORT_PUBLISHED: ${PORT_PUBLISHED}
       VERSION: ${VERSION}
+      HOSTNAME_CUSTOM: "${HOSTNAME_CUSTOM}"
       # coloque mais envs...
     ports:
       - ${PORT_PUBLISHED}:${PORT}
@@ -43,6 +44,8 @@ services:
           memory: ${DEPLOY_RESOURCES_LIMITS_MEMORY}
       restart_policy:
         condition: on-failure
+        delay: ${DEPLOY_RESTART_POLICY_DELAY:-5s}
+        max_attempts: ${DEPLOY_RESTART_POLICY_MAX_ATTEMPTS:-3}
 
 networks:
   net:
