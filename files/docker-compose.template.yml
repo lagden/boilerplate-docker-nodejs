@@ -4,20 +4,8 @@ services:
     image: ${REGISTRY}/${IMAGE}:${VERSION}
     command: >
       /bin/ash -c "
-        node server
+        ${RUN_CMD}
       "
-
-    # command: >
-    #   /bin/ash -c "
-    #     npx sirv ${PUBLIC_DIR} --dev -eBc -m 0 -H ${HOSTNAME_CUSTOM} --port ${PORT}
-    #   "
-
-    # command: >
-    #   /bin/ash -c "
-    #     bin/helper/wait ${DB_HOST}:${DB_PORT};
-    #     node server
-    #   "
-
     environment:
       DEBUG_HIDE_DATE: ${DEBUG_HIDE_DATE}
       DEBUG_COLORS: ${DEBUG_COLORS}
