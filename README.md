@@ -2,29 +2,30 @@
 
 Boilerplate para executar uma aplicação **Node.js** via **docker**.
 
-Utilizados nos projetos:
+Pode ser utilizado nos projetos:
 
 - [Boilerplate Rest](https://github.com/lagden/boilerplate-rest)
 - [Boilerplate GraphQL](https://github.com/lagden/boilerplate-gql)
+- [Boilerplate Websocket](https://github.com/lagden/boilerplate-ws)
 - [Boilerplate Svelte](https://github.com/lagden/boilerplate-svelte)
 
 
 ## Como usar
 
-⚠️ **Atenção**
+Utilize `@tadashi/boilerplate-create` para iniciar o projeto.
 
-Esses arquivos dependem de uma estrutura específica para que funcionem.
-
-**Exemplo:**
-
-```shell
-npx tiged lagden/boilerplate-rest#main projeto
-cd projeto
-npx tiged lagden/boilerplate-bin/files#main bin --force
-npx tiged lagden/boilerplate-eslint/files/backend#main . --force
-npx tiged lagden/boilerplate-envs/files#main . --force
-npx tiged lagden/boilerplate-docker-nodejs/files#main . --force
 ```
+npm i -g @tadashi/boilerplate-create
+boilerplate-create
+```
+
+ou
+
+```
+npx --yes @tadashi/boilerplate-create
+```
+
+E siga as instruções do prompt.
 
 
 ## License

@@ -2,10 +2,7 @@ version: "3.7"
 services:
   app:
     image: ${REGISTRY}/${IMAGE}:${VERSION}
-    command: >
-      /bin/ash -c "
-        ${RUN_CMD}
-      "
+    command: ${RUN_CMD}
     environment:
       DEBUG_HIDE_DATE: ${DEBUG_HIDE_DATE}
       DEBUG_COLORS: ${DEBUG_COLORS}
