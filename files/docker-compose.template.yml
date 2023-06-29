@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 services:
   app:
     image: ${REGISTRY}/${IMAGE}:${VERSION}
@@ -21,7 +21,6 @@ services:
     networks:
       - net
     deploy:
-      mode: replicated
       replicas: ${DEPLOY_REPLICAS}
       resources:
         limits:
@@ -30,7 +29,6 @@ services:
       restart_policy:
         condition: on-failure
         delay: ${DEPLOY_RESTART_POLICY_DELAY:-5s}
-        max_attempts: ${DEPLOY_RESTART_POLICY_MAX_ATTEMPTS:-3}
 
 networks:
   net:

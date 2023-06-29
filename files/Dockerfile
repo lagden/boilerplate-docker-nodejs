@@ -1,7 +1,7 @@
-# Development
+# Base
 # --------------------
 # --------------------
-FROM lagden/node:latest as dev
+FROM lagden/node:latest AS base
 
 ARG PM="npm"
 ARG NODE_ENV="development"
@@ -11,72 +11,66 @@ ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
 
-RUN [[ "${PM}" == "yarn" ]] && echo "via ${PM}" || npm i -g $PM
+RUN npm install --global --ignore-scripts npm
+RUN npm install --global --ignore-scripts pnpm
 
 USER node
 
 RUN mkdir -p $BASE_APP
 WORKDIR $BASE_APP
 
-COPY --chown=node:node . $BASE_APP
-RUN $PM install
+
+
+# Development
+# --------------------
+# --------------------
+FROM base AS dev
+
+COPY --chown=node:node package.json $BASE_APP
+COPY --chown=node:node *-lock.json $BASE_APP
+COPY --chown=node:node *-lock.yaml $BASE_APP
+
+RUN $PM install --ignore-scripts
 
 
 
 # Main Backend
 # --------------------
 # --------------------
-FROM lagden/node:latest as main
+FROM base AS main
 
-ARG PM="npm"
-ARG NODE_ENV="production"
-ARG BASE="/home/node"
+COPY --chown=node:node server $BASE_APP/server
+COPY --chown=node:node package.json $BASE_APP
+COPY --chown=node:node *-lock.json $BASE_APP
+COPY --chown=node:node *-lock.yaml $BASE_APP
 
-ENV NODE_ENV=$NODE_ENV
-ENV BASE=$BASE
-ENV BASE_APP=$BASE/app
+RUN $PM install --ignore-scripts
 
-RUN [[ "${PM}" == "yarn" ]] && echo "via ${PM}" || npm i -g $PM
-
-USER node
-
-RUN mkdir -p $BASE_APP
-WORKDIR $BASE_APP
-
-COPY --chown=node:node . $BASE_APP
-RUN [[ "${PM}" == "yarn" ]] && yarn plugin import workspace-tools;yarn workspaces focus --all --production || $PM i
-RUN rm -rf bin/docker bin/local bin/node
-RUN rm -rf .d* .e* .g* .p* .r* .y* *.lock
+CMD ["node", "server/index.js"]
 
 
 
 # Build Frontend
 # --------------------
 # --------------------
-FROM lagden/node:latest as build_frontend
+FROM base as build_frontend
 
-ARG PM="npm"
-ARG NODE_ENV="production"
-ARG BASE="/home/node"
+COPY --chown=node:node bin $BASE_APP/bin
+COPY --chown=node:node resource $BASE_APP/resource
+COPY --chown=node:node src $BASE_APP/src
+COPY --chown=node:node .eslintrc.cjs $BASE_APP
+COPY --chown=node:node .gitignore $BASE_APP
+COPY --chown=node:node .npmrc $BASE_APP
+COPY --chown=node:node index.html $BASE_APP
+COPY --chown=node:node package.json $BASE_APP
+COPY --chown=node:node *-lock.json $BASE_APP
+COPY --chown=node:node *-lock.yaml $BASE_APP
+COPY --chown=node:node *.config.js $BASE_APP
+COPY --chown=node:node *.config.cjs $BASE_APP
+COPY --chown=node:node *.config.json $BASE_APP
+COPY --chown=node:node .conf/base.sh $BASE_APP/env.sh
 
-ENV NODE_ENV=$NODE_ENV
-ENV BASE=$BASE
-ENV BASE_APP=$BASE/app
-
-RUN [[ "${PM}" == "yarn" ]] && echo "via ${PM}" || npm i -g $PM
-
-USER node
-
-RUN mkdir -p $BASE_APP
-WORKDIR $BASE_APP
-
-COPY --chown=node:node . $BASE_APP
-
-RUN [[ "${PM}" == "yarn" ]] && $PM install || echo "via ${PM}"
-RUN [[ "${PM}" == "pnpm" ]] && $PM i --prod --dev || echo "via ${PM}"
-RUN [[ "${PM}" == "npm" ]] && $PM i --production=false || echo "via ${PM}"
-
-RUN npm run build
+RUN bin/helper/build
 
 
 
@@ -85,8 +79,8 @@ RUN npm run build
 # --------------------
 FROM lagden/httpd:sws-2.16.0 as main_frontend
 
-ARG BASE="/"
 ARG BASE_BUILD="/home/node/app"
+EXPOSE 5001
 
-WORKDIR $BASE
-COPY --from=build_frontend $BASE_BUILD/dist*/ dist
+COPY --from=build_frontend $BASE_BUILD/dist dist
+CMD ["/sws", "-d", "dist", "-p", "5001", "-g", "info", "-q", "10", "-e", "false", "-c", "*"]

@@ -1,21 +1,25 @@
 .*
 coverage
-node_modules
-test
 dist
+node_modules
 
 docker-compose*
 Dockerfile*
 
+jsconfig.json
 LICENSE
 license
 readme.md
 README.md
+
+purge*.md
 stuff*.md
 
+!.conf
 !.prettierrc*
 !.eslintrc*
-!.gitignore
+!.gitignore*
+!.npmrc*
 
 !.yarnrc.yml
 !.yarn/cache
