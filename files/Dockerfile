@@ -70,7 +70,7 @@ COPY --chown=node:node *.config.cjs $BASE_APP
 COPY --chown=node:node *.config.json $BASE_APP
 COPY --chown=node:node .conf/base.sh $BASE_APP/env.sh
 
-RUN bin/helper/build
+RUN bin/node/build
 
 
 
