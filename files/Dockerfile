@@ -4,9 +4,11 @@
 FROM lagden/node:latest AS base
 
 ARG PM="npm"
+ARG VERSION="none"
 ARG NODE_ENV="development"
 ARG BASE="/home/node"
 
+ENV VERSION=$VERSION
 ENV NODE_ENV=$NODE_ENV
 ENV BASE=$BASE
 ENV BASE_APP=$BASE/app
