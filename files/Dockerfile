@@ -4,7 +4,7 @@
 FROM lagden/node:latest AS base
 
 ARG PM="npm"
-ARG VERSION="none"
+ARG VERSION="local"
 ARG NODE_ENV="development"
 ARG BASE="/home/node"
 
