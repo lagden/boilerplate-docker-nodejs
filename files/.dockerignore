@@ -3,19 +3,22 @@
 
 bin
 coverage
+dist
 node_modules
-test
 
 docker-compose*
 Dockerfile*
-dockerfile*
 
 LICENSE
 license
-readme.md
-README.md
-Readme.md
-values.yaml
+*.md
+
+!.conf
+!.eslintrc*
+!.gitignore*
+!.npmrc*
+!.prettier*
 
 !bin/helper
 !bin/node/install
+!bin/node/build
