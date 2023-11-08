@@ -79,7 +79,7 @@ RUN bin/node/build
 # Main Frontend
 # --------------------
 # --------------------
-FROM lagden/httpd:sws-2.16.0 as main_frontend
+FROM lagden/httpd:latest as main_frontend
 
 ARG BASE_BUILD="/home/node/app"
 EXPOSE 5001
