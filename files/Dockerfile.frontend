@@ -3,12 +3,14 @@
 # --------------------
 FROM node:lts-slim AS base
 
+ARG TZ=America/Sao_Paulo
 ARG PM="npm"
 ARG VERSION="local"
 ARG NODE_ENV="development"
 ARG APP_ENV="development"
 ARG BASE="/home/node"
 
+ENV TZ=$TZ
 ENV VERSION=$VERSION
 ENV NODE_ENV=$NODE_ENV
 ENV APP_ENV=$APP_ENV
@@ -57,21 +59,29 @@ COPY --chown=node:node *-lock.* $BASE_APP
 COPY --chown=node:node *.config.js $BASE_APP
 COPY --chown=node:node *.config.cjs $BASE_APP
 COPY --chown=node:node *.config.json $BASE_APP
-COPY --chown=node:node jsconfig.json $BASE_APP
+COPY --chown=node:node *config.json $BASE_APP
 
 RUN bin/node/build
+
+
+
+# Builder SWS
+# --------------------
+# --------------------
+FROM joseluisq/static-web-server:latest AS builder_sws
 
 
 
 # Main Frontend
 # --------------------
 # --------------------
-FROM lagden/httpd:latest as main_frontend
+FROM scratch as main_frontend
 
 ARG BASE_APP_DIST="/home/node/app/dist"
 EXPOSE 5001
 
 ENV SERVER_CACHE_CONTROL_HEADERS=false
 
+COPY --from=builder_sws /static-web-server /sws
 COPY --from=build_frontend $BASE_APP_DIST dist
 CMD ["/sws", "-d", "dist", "-p", "5001", "-g", "info", "-q", "10", "-c", "*"]
