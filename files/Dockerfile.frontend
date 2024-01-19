@@ -49,16 +49,14 @@ FROM base as build_frontend
 COPY --chown=node:node .conf $BASE_APP/.conf
 COPY --chown=node:node bin $BASE_APP/bin
 COPY --chown=node:node src $BASE_APP/src
-COPY --chown=node:node .eslintrc.yml $BASE_APP
-COPY --chown=node:node .gitignore $BASE_APP
-COPY --chown=node:node .npmrc $BASE_APP
+COPY --chown=node:node .eslint* $BASE_APP
+COPY --chown=node:node .npmrc* $BASE_APP
 COPY --chown=node:node .prettier* $BASE_APP
 COPY --chown=node:node index.html $BASE_APP
 COPY --chown=node:node package.json $BASE_APP
 COPY --chown=node:node *-lock.* $BASE_APP
-COPY --chown=node:node *.config.js $BASE_APP
-COPY --chown=node:node *.config.cjs $BASE_APP
-COPY --chown=node:node *.config.json $BASE_APP
+COPY --chown=node:node *.lock $BASE_APP
+COPY --chown=node:node *.config.* $BASE_APP
 COPY --chown=node:node *config.json $BASE_APP
 
 RUN bin/node/build

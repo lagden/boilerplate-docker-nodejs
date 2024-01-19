@@ -57,9 +57,11 @@ FROM base AS main
 COPY --chown=node:node bin $BASE_APP/bin
 COPY --chown=node:node cli $BASE_APP/cli
 COPY --chown=node:node server $BASE_APP/server
+# COPY --chown=node:node dist $BASE_APP/dist
 # COPY --chown=node:node public $BASE_APP/public
 COPY --chown=node:node package.json $BASE_APP
 COPY --chown=node:node *-lock.* $BASE_APP
+COPY --chown=node:node *.lock $BASE_APP
 COPY --chown=node:node .npmrc* $BASE_APP
 
 RUN bin/node/install

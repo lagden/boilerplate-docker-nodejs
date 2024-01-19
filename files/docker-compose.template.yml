@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   app:
-    image: ${REGISTRY}/${IMAGE}:${VERSION}
+    image: ${REGISTRY}/${IMAGE}:${VERSION:-local}
     command: ${RUN_CMD}
     environment:
       DEBUG_HIDE_DATE: ${DEBUG_HIDE_DATE}
@@ -12,28 +12,9 @@ services:
       APP_ENV: ${APP_ENV}
       APP_NS: ${APP_NS}
       PORT: ${PORT}
-      PORT_PUBLISHED: ${PORT_PUBLISHED}
-      VERSION: ${VERSION}
-      HOSTNAME_CUSTOM: "${HOSTNAME_CUSTOM}"
-      # coloque mais envs...
+      VERSION: ${VERSION:-local}
+      HOSTNAME_CUSTOM: "${HOSTNAME_CUSTOM:-127.0.0.1}"
+      # coloque suas variáveis
+      # ...
     ports:
-      - ${PORT_PUBLISHED}:${PORT}
-    networks:
-      - net
-    deploy:
-      replicas: ${DEPLOY_REPLICAS}
-      resources:
-        limits:
-          cpus: ${DEPLOY_RESOURCES_LIMITS_CPUS}
-          memory: ${DEPLOY_RESOURCES_LIMITS_MEMORY}
-      restart_policy:
-        condition: on-failure
-        delay: ${DEPLOY_RESTART_POLICY_DELAY:-5s}
-
-networks:
-  net:
-    name: ${NETWORK_NAME}
-
-# volumes:
-#   db:
-#     name: ${VOL_NAME}_db
+      - ${PORT}:${PORT}
